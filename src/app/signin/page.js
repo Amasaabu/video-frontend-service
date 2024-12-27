@@ -2,6 +2,7 @@
 import  {useRouter} from "next/navigation"
 import axios from "axios"
 import { BASE_URL } from "../values"
+import { BASE_AUTH_URL } from "../values"
 const { useState } = require("react")
 export const Auth=()=>{
     const router = useRouter();
@@ -21,7 +22,7 @@ export const Auth=()=>{
         }
     ]) 
     const login = async()=>{
-        const data = await axios.post(BASE_URL+"/api/user/auth", {email: form[0].value, password: form[1].value}, {withCredentials:true})
+        const data = await axios.post(BASE_AUTH_URL+"/api/user/auth", {email: form[0].value, password: form[1].value}, {withCredentials:true})
         console.log(data)
         router.push("/")
     }
