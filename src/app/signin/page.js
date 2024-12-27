@@ -21,8 +21,9 @@ export const Auth=()=>{
         }
     ]) 
     const login = async()=>{
-        const data = await axios.post(BASE_URL+"/api/user/auth", {email: form[0].value, password: form[1].value})
+        const data = await axios.post(BASE_URL+"/api/user/auth", {email: form[0].value, password: form[1].value}, {withCredentials:true})
         console.log(data)
+        router.push("/")
     }
     return (
         <div className="mt-[50px]">
