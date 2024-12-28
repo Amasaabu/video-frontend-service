@@ -1,5 +1,6 @@
 "use client";
-import React, {createContext, useReducer, useCallback} from 'react';
+import React, {createContext, useReducer, useEffect} from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { BASE_AUTH_URL } from '@/app/values';
 
@@ -21,18 +22,23 @@ const userReducer = (state, action)=>{
 }
 
 const UserContextProvider = ({children})=>{
+    const router = useRouter()
     const [state, dispatch] = useReducer(userReducer, {user: null})
     const login = async(email, password)=>{
         await axios.post(BASE_AUTH_URL+"/api/user/auth", {email, password}, {withCredentials:true})
-        // try to get the user
-        getUserFromToken()
+        router.push("/")
     }
+    useEffect(()=>{
+        getUserFromToken()
+    },[])
     const getUserFromToken=async()=>{
         try {
             const {data} = await axios.get(BASE_AUTH_URL+"/api/user/profile", {withCredentials:true})
             dispatch({type: "LOGIN", payload: {...data.message}})
         } catch (error) {
+            router.push("/signin")
             console.log("error", error)
+             document.cookie = 'token=; Max-Age=0; path=/;'
         }
 
     }

@@ -8,7 +8,6 @@ export default async function middleware(req, res) {
     return NextResponse.next();
   }
   const token = req.cookies.get('token')
-  console.log("middleware token", token);
   if (!token && protectedRoutes.includes(path)) {
     return NextResponse.redirect(new URL('/signin', req.nextUrl))
   } else {
