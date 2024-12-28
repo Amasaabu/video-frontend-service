@@ -1,7 +1,10 @@
+"use client"
+const {useRouter} = require("next/navigation");
 export const VideoCard = ({ video }) => {
+    const router = useRouter();
     return (
         // <div className="pb-[9px] cursor-pointer w-[15%] mr-[2%] h-[100px] flex flex-col items-center justify-center bg-gray-100 rounded-lg shadow-md">
-        <div className="cursor-pointer">
+        <div onClick={()=>router.push(`/watch/${video.id}?poster=${video.thumbNailLocation}`)} className="cursor-pointer">
         <img
             src={video.thumbNailLocation}
             alt={video.title}
