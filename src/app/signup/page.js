@@ -3,35 +3,35 @@ import  {useRouter} from "next/navigation"
 const { useState } = require("react")
 export const Auth=()=>{
     const router = useRouter();
-    const [form, setForm] = useState([
-        {
+    const [form, setForm] = useState({
+        email: {
             label: "Email",
             placeholder: "Email",
             type: "text",
             value: ""
 
         },
-        {
+       firstName: {
             label: "First Name",
             placeholder: "First Name",
             type: "text",
             value: ""
 
         },
-        {
+       lastName: {
             label: "Last Name",
             placeholder: "Last Name",
             type: "text",
             value: ""
 
         },
-        {
+        password: {
             label: "Password",
             placeholder: "Password",
             type: "password",
             value: ""
         }
-    ])  
+})  
     return (
         <div className="mt-[50px]">
             <div className="w-[500px] p-[1%] rounded-lg m-auto bg-[#1d1b1b]">

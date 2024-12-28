@@ -2,8 +2,8 @@ import { VideoCard } from "../card/VideoCard"
 const section = ({videos}) => {
     return (
         <div className="flex">
-            {videos.map((video)=>{
-                return <div className="mr-[50px]"> <VideoCard video={video}/></div>
+            {videos.map((video, id)=>{
+                return <div key={id} className="mr-[50px]"> <VideoCard video={video}/></div>
             })}
         </div>
 

@@ -1,4 +1,6 @@
 "use client"
+import { UserContext } from "@/context/userContext"
+import { useContext } from "react"
 import  {useRouter} from "next/navigation"
 import axios from "axios"
 import { BASE_URL } from "../values"
@@ -6,26 +8,24 @@ import { BASE_AUTH_URL } from "../values"
 const { useState } = require("react")
 export const Auth=()=>{
     const router = useRouter();
-    const [form, setForm] = useState([
-        {
+
+    const [form, setForm] = useState({
+        email: {
             label: "Email",
             placeholder: "Email",
             type: "text",
             value: ""
 
         },
-        {
+        password: {
             label: "Password",
             placeholder: "Password",
             type: "password",
             value: ""
         }
-    ]) 
-    const login = async()=>{
-        const data = await axios.post(BASE_AUTH_URL+"/api/user/auth", {email: form[0].value, password: form[1].value}, {withCredentials:true})
-        console.log(data)
-        router.push("/")
-    }
+}) 
+    const userCxt = useContext(UserContext)
+    if (userCxt.state.user) router.push("/")
     return (
         <div className="mt-[50px]">
             <div className="w-[420px] p-[1%] rounded-lg m-auto bg-[#1d1b1b]">
@@ -43,7 +43,7 @@ export const Auth=()=>{
                     </div>
                     )
                 })}
-                <button onClick={login} className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Sign-In</button>
+                <button onClick={()=>userCxt.action.login(form.email.value, form.password.value)} className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Sign-In</button>
                 <div className="mt-[5px] cursor-pointer text-sm">Reset Password?</div>
             </div>
         </div>

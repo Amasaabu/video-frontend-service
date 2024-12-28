@@ -1,6 +1,12 @@
+"use client"
 import { ProfileIcon } from "../profileicon/ProfileIcon";
 import Link from "next/link";
+import { useContext } from "react";
+import { UserContext } from "@/context/userContext";
 const Nav=()=>{
+    const userCxt = useContext(UserContext);
+    console.log("Nav is rendering")
+    console.log(userCxt.state.user)
     const navItems = ["Home", "Trending", "Settings", "Liked Videos", "History"];
     return (
         <div className="flex mt-[20px]">
@@ -13,7 +19,7 @@ const Nav=()=>{
                      })}
             </div>
             <div className="w-fit  mr-[8%] ml-auto">
-                <ProfileIcon user={{ name: "John Doe", avatar: null}} />
+                <ProfileIcon user={userCxt.state } />
             </div>
         </div>
     )

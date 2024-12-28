@@ -3,10 +3,14 @@ import Section1 from '@/components/section1/section'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_CONTENT_URL } from "./values";
+import { UserContext } from "@/context/userContext";
+import { useContext } from "react";
 export default function Home() {
-  // const videos = [{title: "This is us", description: "A movie about this is us"}]
+  const userCxt = useContext(UserContext);
   const [videos, setVideos]=useState([])
   useEffect(()=>{
+    console.log(userCxt)
+    userCxt.action.getUserFromToken()
     const fetchVideos = async()=>{
       const {data} = await axios.get(BASE_CONTENT_URL + "/api/content/all/video")
       console.log(data)
