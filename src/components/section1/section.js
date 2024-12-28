@@ -3,9 +3,9 @@ const section = ({videos}) => {
     return (
         <div className="flex">
             {videos.map((video)=>{
-                return <VideoCard video={video}/>
+                return <div className="mr-[50px]"> <VideoCard video={video}/></div>
             })}
-  </div>
+        </div>
 
     )
 }
