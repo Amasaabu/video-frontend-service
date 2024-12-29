@@ -13,9 +13,12 @@ FROM node:22.0.0-alpine
 WORKDIR /app
 COPY --from=base /app/public /app/public
 COPY --from=base /app/.next/standalone /app
-COPY --from=base /app/.next/static /app/next/static
+COPY --from=base /app/.next/static /app/.next/static
 
 
 WORKDIR /app
-EXPOSE 3000
+EXPOSE 3001
+ENV PORT=3001
+
+ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]

@@ -25,6 +25,7 @@ const UserContextProvider = ({children})=>{
     const router = useRouter()
     const [state, dispatch] = useReducer(userReducer, {user: null})
     const login = async(email, password)=>{
+        console.log("login")
         await axios.post(BASE_AUTH_URL+"/api/user/auth", {email, password}, {withCredentials:true})
         router.push("/")
     }
