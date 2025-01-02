@@ -1,8 +1,11 @@
 "use client"
+import axios from "axios";
 import  {useRouter} from "next/navigation"
+import { BASE_AUTH_URL } from "../values";
 const { useState } = require("react")
 export const Auth=()=>{
     const router = useRouter();
+    const [signupStatus, setSignupStatus] = useState(false)
     const [form, setForm] = useState({
         email: {
             label: "Email",
@@ -32,6 +35,21 @@ export const Auth=()=>{
             value: ""
         }
 })  
+
+    const signup=async()=>{
+        try {
+            const {data} = await axios.post(BASE_AUTH_URL+"/api/user/register", {
+                email: form.email.value,
+                password: form.password.value,
+                firstName: form.value.firstName,
+                lastName: form.lastName .value
+            })
+            setSignupStatus("User signedup successfully, kindly log in")
+        } catch (error) {
+            setSignupStatus("Signup failed, kindy try again")
+        }
+
+    }
     return (
         <div className="mt-[50px]">
             <div className="w-[500px] p-[1%] rounded-lg m-auto bg-[#1d1b1b]">
@@ -50,6 +68,7 @@ export const Auth=()=>{
                     )
                 })}
                 <button className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Sign-In</button>
+                {signupStatus?<div className="ml-[3px]">Mesage: {signupStatus}</div>:''}
                 <div  className="mt-[5px] cursor-pointer text-sm">Reset Password?</div>
             </div>
         </div>
