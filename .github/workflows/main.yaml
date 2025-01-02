@@ -1,0 +1,68 @@
+name: frontend actions
+on:
+  push:
+    branches:
+      - main
+env:
+  CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+  IMAGE_TAG: ${{ github.sha }}
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read
+jobs:
+  BUILD_AND_PUBLISH_TO_DOCKERHUB:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: login to dockerhub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and publish
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO}}:${{ env.IMAGE_TAG }}
+
+
+  HELM_DEPLOY:
+    needs: BUILD_AND_PUBLISH_TO_DOCKERHUB
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: 'Checkout values file repository'
+        uses: actions/checkout@v4
+        with:
+          repository: 'amasaabu/video-streaming-infra'  # Replace with the actual username and repo
+          path: 'helmfile'  # Use a different path to avoid overwriting files
+          token: ${{ secrets.TOKEN_FOR_HELM_REPO }}
+
+      - name: 'Use AWS Token provider'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::451613728407:role/github-role
+      - name: Get Kube config file
+        run: |
+          mkdir -p ~/.kube
+          aws eks update-kubeconfig --region us-east-2 --name ${{ env.CLUSTER_NAME }}
+
+      - name: install helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+      - name: Trigger hem install
+        run: |
+          echo "Image Tag: ${{ env.IMAGE_TAG }}"
+          helm upgrade frontend -f helmfile/helm/frontend.yaml --set image.tag=${{ env.IMAGE_TAG }} helmfile/helm

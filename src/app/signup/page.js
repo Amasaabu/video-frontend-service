@@ -67,7 +67,7 @@ export const Auth=()=>{
                     </div>
                     )
                 })}
-                <button className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Sign-In</button>
+                <button onClick={()=>signup()} className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Sign-Up</button>
                 {signupStatus?<div className="ml-[3px]">Mesage: {signupStatus}</div>:''}
                 <div  className="mt-[5px] cursor-pointer text-sm">Reset Password?</div>
             </div>
