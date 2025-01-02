@@ -65,4 +65,4 @@ jobs:
       - name: Trigger hem install
         run: |
           echo "Image Tag: ${{ env.IMAGE_TAG }}"
-          helm upgrade frontend -f helmfile/helm/frontend.yaml --set image.tag=${{ env.IMAGE_TAG }} helmfile/helm
+          helm upgrade frontend -f helmfile/helm/frontendvalues.yaml --set image.tag=${{ env.IMAGE_TAG }} helmfile/helm
