@@ -43,7 +43,7 @@ export const Auth=()=>{
                 email: form.email.value,
                 password: form.password.value,
                 firstName: form.value.firstName,
-                lastName: form.lastName .value
+                lastName: form.lastName.value
             })
             setSignupStatus("User signedup successfully, kindly log in")
         } catch (error) {
