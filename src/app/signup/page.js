@@ -47,6 +47,7 @@ export const Auth=()=>{
             })
             setSignupStatus("User signedup successfully, kindly log in")
         } catch (error) {
+            console.log(error);
             setSignupStatus("Signup failed, kindy try again")
         }
 
