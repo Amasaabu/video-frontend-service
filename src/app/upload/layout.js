@@ -101,6 +101,10 @@ const onImageUpload = async (e) => {
     }
 
     const submitRequest = async()=>{ 
+        console.log("submitting request");
+        for (const [key, value] of formDataRef.current.entries()) {
+            console.log(`${key}:`, value); // This will log the key and the file object
+        }
         try {
             const repsonse = await sendVideo()
             console.log(repsonse)
