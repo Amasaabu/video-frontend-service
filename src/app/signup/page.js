@@ -42,7 +42,7 @@ export const Auth=()=>{
             const {data} = await axios.post(BASE_AUTH_URL+"/api/user/register", {
                 email: form.email.value,
                 password: form.password.value,
-                firstName: form.value.firstName,
+                firstName: form.firstName.value,
                 lastName: form.lastName.value
             })
             setSignupStatus("User signedup successfully, kindly log in")
