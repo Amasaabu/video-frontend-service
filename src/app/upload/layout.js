@@ -46,10 +46,16 @@ const onImageUpload = async (e) => {
     
 }
     const sendVideo = async()=>{
+    const cookies = document.cookie.split(';')
+      let parts = []
+      cookies.forEach(cookie=>{
+        if(cookie.includes('token')){
+          parts = cookie.split('=')
+        }})
         try {
         //submit video
         const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/upload", fd, {
-            headers: { 'Content-Type': `multipart/form-data` },
+            headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
             onUploadProgress: (uploadState) => console.log(uploadState.loaded)
         }) 
         console.log(data)
@@ -60,6 +66,15 @@ const onImageUpload = async (e) => {
 
     }
     const sendForm = async()=>{
+        const cookies = document.cookie.split(';')
+        let parts = []
+        cookies.forEach(cookie=>{
+          if(cookie.includes('token')){
+            parts = cookie.split('=')
+          }})
+        
+        console.log('Before axios');
+        console.log(parts[1])
         try {
         await axios.post(`/api/content/add`, {
             title: form.title.value,
@@ -68,7 +83,7 @@ const onImageUpload = async (e) => {
             thumbNailLocation: "",
             location: "https://video-streaming-bucket-8.s3.us-east-2.amazonaws.com/video/sound.mp4",
             
-        })
+        }, {headers: {token: `${parts[1]}`}})
         } catch (error) {
             console.log(error)
             
