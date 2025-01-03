@@ -5,7 +5,7 @@ import axios from "axios"
 const Upload=()=>{
     // const router = useRouter();
     const [uploadedFileName, setUploadedFileName] = useState("")
-    const formDataRef = useRef(new FormData());
+    const formDataRef = useRef(null);
     const isUploading = useRef(false);
     const [form, setForm] = useState({
         title: {
@@ -37,11 +37,13 @@ const Upload=()=>{
 
 const onImageUpload = async (e) => {
     const selectedFile = e.target.files[0];
-    // formDataRef.current = new FormData(); // Ensure a fresh FormData instance
+    formDataRef.current = new FormData();
     formDataRef.current.append('file', selectedFile);
     setUploadedFileName(selectedFile.name);
     console.log("Updated data")
-    console.log(formDataRef.current)
+    for (const [key, value] of formDataRef.current.entries()) {
+        console.log(`${key}:`, value); // This will log the key and the file object
+    }
     //to prevent calling setState twice and aviod duplicatae btns 
     // if(!versionedBollean) {
     //     setFileState({name:file.name})
@@ -63,7 +65,7 @@ const onImageUpload = async (e) => {
         //submit video
         const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/upload", formDataRef.current, {
             headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
-            onUploadProgress: (uploadState) => console.log(uploadState.loaded)
+           // onUploadProgress: (uploadState) => console.log(uploadState.loaded)
         }) 
         isUploading.current = false;
         console.log(data)
