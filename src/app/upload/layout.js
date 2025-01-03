@@ -36,7 +36,7 @@ const Upload=()=>{
 
 const onImageUpload = async (e) => {
     const selectedFile = e.target.files[0];
-    formDataRef.current = new FormData(); // Ensure a fresh FormData instance
+    // formDataRef.current = new FormData(); // Ensure a fresh FormData instance
     formDataRef.current.append('file', selectedFile);
     setUploadedFileName(selectedFile.name);
     //to prevent calling setState twice and aviod duplicatae btns 
@@ -124,7 +124,7 @@ const onImageUpload = async (e) => {
                         <label className="mt-[20px] cursor-pointer block bg-green-500 p-2 rounded-lg w-fit mt-[10px]" for='imgupload'>Click to upload Video file</label>
 
                         {uploadedFileName && <div className="text-white">{uploadedFileName}</div>}
-                        <div onClick={submitRequest} className="mt-[20px] bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Submit</div>                    
+                        <div onClick={()=>submitRequest()} className="mt-[20px] bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Submit</div>                    
                     </div>
             </div>
         </div>
