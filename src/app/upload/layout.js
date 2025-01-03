@@ -52,6 +52,7 @@ const onImageUpload = async (e) => {
     
 }
     const sendVideo = async()=>{
+        console.log("sending video")
         if (isUploading.current) return; // Prevent repeated submissions
         isUploading.current = true;
     const cookies = document.cookie.split(';')
