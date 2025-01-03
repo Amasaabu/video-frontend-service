@@ -5,7 +5,7 @@ import axios from "axios"
 const Upload=()=>{
     // const router = useRouter();
     const [uploadedFileName, setUploadedFileName] = useState("")
-    const [file, setFile] = useState(null);
+    const formDataRef = useRef(new FormData());
     const [form, setForm] = useState({
         title: {
             label: "Video Title",
@@ -36,7 +36,8 @@ const Upload=()=>{
 
 const onImageUpload = async (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile); // Store the file in state
+    formDataRef.current = new FormData(); // Ensure a fresh FormData instance
+    formDataRef.current.append('file', selectedFile);
     setUploadedFileName(selectedFile.name);
     //to prevent calling setState twice and aviod duplicatae btns 
     // if(!versionedBollean) {
@@ -46,8 +47,6 @@ const onImageUpload = async (e) => {
     
 }
     const sendVideo = async()=>{
-        let fd = new FormData()
-        fd.append('file', file)
     const cookies = document.cookie.split(';')
       let parts = []
       cookies.forEach(cookie=>{
@@ -56,7 +55,7 @@ const onImageUpload = async (e) => {
         }})
         try {
         //submit video
-        const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/upload", fd, {
+        const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/upload", formDataRef.current, {
             headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
             onUploadProgress: (uploadState) => console.log(uploadState.loaded)
         }) 
