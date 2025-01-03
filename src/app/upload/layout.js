@@ -1,12 +1,12 @@
 "use client"
-import { useState , useRef} from "react"
+import { useState , useRef, useState} from "react"
 import { BASE_CONTENT_URL } from "../values"
 import axios from "axios"
 const Upload=()=>{
     // const router = useRouter();
     const [uploadedFileName, setUploadedFileName] = useState("")
     const formDataRef = useRef(null);
-    const isUploading = useRef(false);
+    const [submitResult, setSubmitResult] = useState()
     const [form, setForm] = useState({
         title: {
             label: "Video Title",
@@ -53,8 +53,6 @@ const onImageUpload = async (e) => {
 }
     const sendVideo = async()=>{
         console.log("sending video")
-        if (isUploading.current) return; // Prevent repeated submissions
-        isUploading.current = true;
     const cookies = document.cookie.split(';')
       let parts = []
       cookies.forEach(cookie=>{
@@ -68,16 +66,14 @@ const onImageUpload = async (e) => {
             headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
            // onUploadProgress: (uploadState) => console.log(uploadState.loaded)
         }) 
-        isUploading.current = false;
         console.log(data)
         return data
         } catch (error) {
             console.log(error.repsonse.data)
-            isUploading.current = false;
         }
 
     }
-    const sendForm = async()=>{
+    const sendForm = async(videoLocation)=>{
         const cookies = document.cookie.split(';')
         let parts = []
         cookies.forEach(cookie=>{
@@ -91,7 +87,7 @@ const onImageUpload = async (e) => {
             releasedAt: form.releasedAt.value,
             genre: form.genre.value,
             thumbNailLocation: "",
-            location: "https://video-streaming-bucket-8.s3.us-east-2.amazonaws.com/video/sound.mp4",
+            location: videoLocation,
             
         }, {headers: {token: `${parts[1]}`}})
         } catch (error) {
@@ -99,20 +95,16 @@ const onImageUpload = async (e) => {
             
         }
     }
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const submitRequest = async()=>{ 
         console.log("submitting request");
-        if (isSubmitting) return; // Prevent repeated submissions
-        for (const [key, value] of formDataRef.current.entries()) {
-            console.log(`${key}:`, value); // This will log the key and the file object
-        }
-        setIsSubmitting(true);
         try {
             const repsonse = await sendVideo()
             console.log(repsonse)
-            await sendForm()
+            await sendForm(repsonse.location)
+            setSubmitResult("Video uploaded successfully")
         } catch (error) {
             console.log(error)
+            setSubmitResult(`Error trying to upload video, error: ${error.response.data}`)
         }
     }
 
@@ -139,7 +131,8 @@ const onImageUpload = async (e) => {
                         <label className="mt-[20px] cursor-pointer block bg-green-500 p-2 rounded-lg w-fit mt-[10px]" for='imgupload'>Click to upload Video file</label>
 
                         {uploadedFileName && <div className="text-white">{uploadedFileName}</div>}
-                        <div onClick={()=>submitRequest()} className="mt-[20px] bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Submit</div>                    
+                        <div onClick={()=>submitRequest()} className="mt-[20px] bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Submit</div>     
+                        {submitResult && <div className="text-white">{submitResult}</div>}               
                     </div>
             </div>
         </div>
