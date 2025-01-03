@@ -40,6 +40,8 @@ const onImageUpload = async (e) => {
     // formDataRef.current = new FormData(); // Ensure a fresh FormData instance
     formDataRef.current.append('file', selectedFile);
     setUploadedFileName(selectedFile.name);
+    console.log("Updated data")
+    console.log(formDataRef.current)
     //to prevent calling setState twice and aviod duplicatae btns 
     // if(!versionedBollean) {
     //     setFileState({name:file.name})
@@ -57,6 +59,7 @@ const onImageUpload = async (e) => {
           parts = cookie.split('=')
         }})
         try {
+        console.log(formDataRef.current)
         //submit video
         const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/upload", formDataRef.current, {
             headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
@@ -79,8 +82,6 @@ const onImageUpload = async (e) => {
             parts = cookie.split('=')
           }})
         
-        console.log('Before axios');
-        console.log(parts[1])
         try {
         await axios.post(`/api/content/add`, {
             title: form.title.value,
