@@ -6,6 +6,7 @@ const Upload=()=>{
     // const router = useRouter();
     const [uploadedFileName, setUploadedFileName] = useState("")
     const formDataRef = useRef(new FormData());
+    const isUploading = useRef(false);
     const [form, setForm] = useState({
         title: {
             label: "Video Title",
@@ -47,6 +48,8 @@ const onImageUpload = async (e) => {
     
 }
     const sendVideo = async()=>{
+        if (isUploading.current) return; // Prevent repeated submissions
+        isUploading.current = true;
     const cookies = document.cookie.split(';')
       let parts = []
       cookies.forEach(cookie=>{
@@ -59,10 +62,12 @@ const onImageUpload = async (e) => {
             headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
             onUploadProgress: (uploadState) => console.log(uploadState.loaded)
         }) 
+        isUploading.current = false;
         console.log(data)
         return data
         } catch (error) {
             console.log(error.repsonse.data)
+            isUploading.current = false;
         }
 
     }
