@@ -1,5 +1,5 @@
 "use client"
-import { useState , useRef, useState} from "react"
+import { useRef, useState} from "react"
 import { BASE_CONTENT_URL } from "../values"
 import axios from "axios"
 const Upload=()=>{
