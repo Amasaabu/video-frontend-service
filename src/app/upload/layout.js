@@ -121,6 +121,7 @@ const onThumbNailUpload = async (e) => {
         try {
             const repsonse = await sendVideo()
             const thumbNail = await sendThumbNail()
+            console.log(thumbNail)
             await sendForm(repsonse.location, thumbNail.location)
             setSubmitResult("Video uploaded successfully")
         } catch (error) {
@@ -150,11 +151,12 @@ const onThumbNailUpload = async (e) => {
                     <div className="">
                         <input onChange={onImageUpload} type="file" id="imgupload" style={{ display: 'none' }} />
                         <label className="mt-[20px] cursor-pointer block bg-green-500 p-2 rounded-lg w-fit mt-[10px]" for='imgupload'>Click to upload Video file</label>
+                        {uploadedFileName && <div className="text-white">{uploadedFileName}</div>}
 
                         <input onChange={onThumbNailUpload} type="file" id="thumbupload" style={{ display: 'none' }} />
                         <label className="mt-[20px] cursor-pointer block bg-green-500 p-2 rounded-lg w-fit mt-[10px]" for='thumbupload'>Click to upload thumbNail</label>
+                        {thumbNailName && <div className="text-white">{thumbNailName}</div>}
 
-                        {uploadedFileName && <div className="text-white">{uploadedFileName}</div>}
                         <div onClick={()=>submitRequest()} className="mt-[20px] bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Submit</div>     
                         {submitResult && <div className="text-white">{submitResult}</div>}               
                     </div>
