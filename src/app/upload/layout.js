@@ -109,6 +109,7 @@ const onThumbNailUpload = async (e) => {
             genre: form.genre.value,
             thumbNailLocation: thumbNailLocation,
             location: videoLocation,
+            originalName: uploadedFileName,
             
         }, {headers: {token: `${parts[1]}`}})
         } catch (error) {
