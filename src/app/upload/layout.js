@@ -63,7 +63,7 @@ const onThumbNailUpload = async (e) => {
           }})
           try {
           //submit thumbNail
-          const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/upload", thumbNailDataRef.current, {
+          const {data} = await axios.post(BASE_CONTENT_URL+"/api/content/thumb", thumbNailDataRef.current, {
               headers: { 'Content-Type': `multipart/form-data`, token: `${parts[1]}` },
              // onUploadProgress: (uploadState) => console.log(uploadState.loaded)
           }) 
