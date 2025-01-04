@@ -93,7 +93,7 @@ const onThumbNailUpload = async (e) => {
             console.log(error.repsonse.data)
         }
 
-    }//
+    }
     const sendForm = async(videoLocation, thumbNailLocation)=>{
         const cookies = document.cookie.split(';')
         let parts = []
