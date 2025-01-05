@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react"
 import  {useRouter} from "next/navigation"
 import { UserContext } from "@/context/userContext"  
 import { BASE_USER_PROFILE_URL } from "../values"
+import axios from "axios"
 const Profile = ()=>{
     const userCxt = useContext(UserContext)
     const [updateStatus, setUpdateStatus] = useState(false)
@@ -23,7 +24,7 @@ const Profile = ()=>{
         }
 }) 
     const router = useRouter();
-    const updateProfile=async()=>{
+    const subscribe=async()=>{
         const requestObject = { 
             amount: form.amount.value,
             cardNumber: form.cardNumber.value,
@@ -50,7 +51,7 @@ const Profile = ()=>{
         }
     },[])
     return (
-        <div>
+        <div className="w-[50%]">
             {userCxt.state.user?.subscriptionstatus==="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: </h1>:<div className="text-red-500">Your subscription has expired, kindly renew</div>}
             <div className="w-fit m-auto">Renew Subscription</div>
             {Object.keys(form).map((item, id)=>{
@@ -66,7 +67,7 @@ const Profile = ()=>{
                     </div>
                     )
                 })}
-                <button onClick={()=>updateProfile()} className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Renew Subscription</button>
+                <button onClick={()=>subscribe()} className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Renew Subscription</button>
                 {updateStatus?<div className="ml-[3px]">Mesage: {setUpdateStatus}</div>:''}
         </div>
     )
