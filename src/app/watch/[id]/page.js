@@ -9,6 +9,7 @@ const Watch=()=>{
     const search = useSearchParams();
     const poster = search.get('poster');    
     const isLiked = search.get('like');
+    const [likeState, setLikeState] = useState(isLiked)
 
     const paths = path.split('/')
     const id = paths[paths.length - 1];
@@ -34,7 +35,7 @@ const Watch=()=>{
                 parts = cookie.split('=')
               }})
              const {data} = await axios.post(BASE_USER_PROFILE_URL + "/api/profile/like/"+id,{}, {headers: {token: `${parts[1]}`}})
-
+            setLikeState("true")
             console.log(data)
         } catch (error) {
             console.log(error)
@@ -49,7 +50,7 @@ const Watch=()=>{
                 parts = cookie.split('=')
               }})
              const {data} = await axios.delete(BASE_USER_PROFILE_URL + "/api/profile/like/"+id, {headers: {token: `${parts[1]}`}})
-
+              setLikeState("false")
             console.log(data)
         } catch (error) {
             console.log(error)
