@@ -11,6 +11,7 @@ export const UserContext = createContext({
 const userReducer = (state, action)=>{
     console.log(action.type)
     console.log(action.payload)
+    //
     switch(action.type){
         case "LOGIN":
             return {...state, user: action.payload}
