@@ -51,7 +51,7 @@ const Watch=()=>{
                 </div>
                 <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
-                <button className="bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Like</button>
+                <button onClick={addToLikes} className="bg-red-500 p-2 rounded-lg w-fit mt-[10px]">Like</button>
                 <button className="bg-red-500 ml-[10px] p-2 rounded-lg w-fit mt-[10px]">Add to watch list</button>
             </div>
             <video poster={poster} controls className="w-full mt-[5vh] h-[500px]">
