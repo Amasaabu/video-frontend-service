@@ -8,7 +8,7 @@ const Nav=()=>{
     console.log("Nav is rendering")
     console.log(userCxt.state.user)
     const [navItems, setNavItems] = useState([{name: "Home", path: ""}, {name: "Trending", path: ""}, {name: "Settings", path:""}, {name: "Liked Videos",path: ""}, {name: "History", path: ""}]);
-    if (UserContext.state?.user.status=='ADMIN') {setNavItems([...navItems, {name: "Upload", path: "/upload"}])}
+    if (UserContext.state?.user.status=="ADMIN") {setNavItems([...navItems, {name: "Upload", path: "/upload"}])}
     console.log(navItems);
     return (
         <div className="flex mt-[20px]">
