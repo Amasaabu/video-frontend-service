@@ -39,8 +39,8 @@ const Profile = ()=>{
           }})
           try {
             const {data} = await axios.post(BASE_USER_PROFILE_URL + "/api/profile/subscribe", requestObject, {headers: {token: parts[1]}})
-            setUpdateStatus("Subscription updated successfully, navigate to home")
             router.push("/")
+            setUpdateStatus("Subscription updated successfully, navigate to home")
           } catch (error) {
             console.log(error)
             setUpdateStatus("Subscription update failed, kindly try again")
