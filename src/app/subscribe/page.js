@@ -51,7 +51,7 @@ const Profile = ()=>{
     },[])
     return (
         <div>
-            {userCxt.state?.user.subscriptionstatus==="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: </h1>:<div className="text-red-500">Your subscription has expired, kindly renew</div>}
+            {userCxt.state.user?.subscriptionstatus==="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: </h1>:<div className="text-red-500">Your subscription has expired, kindly renew</div>}
             <div className="w-fit m-auto">Renew Subscription</div>
             {Object.keys(form).map((item, id)=>{
                 return (
