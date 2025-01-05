@@ -10,15 +10,15 @@ export default function Home() {
   const userCxt = useContext(UserContext);
   const [videos, setVideos]=useState([])
   const [likedVideos, setLikedVideos]=useState([])
-  // const router = useRouter()
-  // //guard to prevent unsubscribed users from accessing the page
-  // useEffect(()=>{
-  //   if(userCxt.state.user?.subscriptionstatus=="active"){
-  //     console.log("active subscription")
-  //   }else{
-  //     router.push("/subscribe")
-  //   }
-  // },[])
+  const router = useRouter()
+  //guard to prevent unsubscribed users from accessing the page
+  useEffect(()=>{
+    if(userCxt.state.user?.subscriptionstatus=="active"){
+      console.log("active subscription")
+    }else{
+      router.push("/subscribe")
+    }
+  },[])
   useEffect(()=>{
     // userCxt.action.getUserFromToken()
     const fetchVideos = async()=>{
