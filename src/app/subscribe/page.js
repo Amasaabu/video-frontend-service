@@ -38,11 +38,11 @@ const Profile = ()=>{
           }})
           try {
             const {data} = await axios.post(BASE_USER_PROFILE_URL + "/api/profile/subscribe", requestObject, {headers: {token: parts[1]}})
-            updateStatus("Subscription updated successfully, navigate to home")
+            setUpdateStatus("Subscription updated successfully, navigate to home")
             router.push("/")
           } catch (error) {
             console.log(error)
-            updateStatus("Subscription update failed, kindly try again")
+            setUpdateStatus("Subscription update failed, kindly try again")
           }
     }
     useEffect(()=>{
@@ -52,7 +52,7 @@ const Profile = ()=>{
     },[])
     return (
         <div className="w-[50%]">
-            {userCxt.state.user?.subscriptionstatus==="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: </h1>:<div className="text-red-500">Your subscription has expired, kindly renew</div>}
+            {userCxt.state.user?.subscriptionstatus=="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: </h1>:<div className="text-red-500">Your subscription has expired, kindly renew</div>}
             <div className="w-fit m-auto">Renew Subscription</div>
             {Object.keys(form).map((item, id)=>{
                 return (
