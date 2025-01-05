@@ -8,7 +8,7 @@ const Watch=()=>{
     const path = usePathname();
     const search = useSearchParams();
     const poster = search.get('poster');    
-    const isLiked = search.get('isLiked');
+    const isLiked = search.get('like');
 
     const paths = path.split('/')
     const id = paths[paths.length - 1];
@@ -40,6 +40,21 @@ const Watch=()=>{
             console.log(error)
         }
     }
+    const removeFromLikes = async()=>{
+        try {
+            const cookies = document.cookie.split(';')
+            let parts = []
+            cookies.forEach(cookie=>{
+              if(cookie.includes('token')){
+                parts = cookie.split('=')
+              }})
+             const {data} = await axios.delete(BASE_USER_PROFILE_URL + "/api/profile/like/"+id, {headers: {token: `${parts[1]}`}})
+
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div className="aspect-w-16 aspect-h-9">
             {/* <div className="absolute top-10 left-0 w-full h-full flex  justify-center bg-black bg-opacity-30 text-white">
@@ -53,7 +68,7 @@ const Watch=()=>{
                 </div>
                 <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
-                <button onClick={addToLikes} className="bg-red-500 p-2 rounded-lg w-fit mt-[10px]">{isLiked?"Like":"Unlike"}</button>
+                <button onClick={isLiked==true?addToLikes:removeFromLikes} className="bg-red-500 p-2 rounded-lg w-fit mt-[10px]">{isLiked==true?"Unlike":"Like"}</button>
                 <button className="bg-red-500 ml-[10px] p-2 rounded-lg w-fit mt-[10px]">Add to watch list</button>
             </div>
             <video poster={poster} controls className="w-full mt-[5vh] h-[500px]">
