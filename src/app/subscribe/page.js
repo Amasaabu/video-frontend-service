@@ -45,7 +45,7 @@ const Profile = ()=>{
           }
     }
     useEffect(()=>{
-        if(userCxt.state?.user.subscriptionstatus==="active"){
+        if(userCxt.state.user?.subscriptionstatus==="active"){
             //get subscription expiry date
         }
     },[])
