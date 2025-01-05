@@ -7,14 +7,15 @@ const Nav=()=>{
     const userCxt = useContext(UserContext);
     console.log("Nav is rendering")
     console.log(userCxt.state.user)
-    const navItems = ["Home", "Trending", "Settings", "Liked Videos", "History"];
+    const navItems = [{name: "Home", path: ""}, {name: "Trending", path: ""}, {name: "Settings", path:""}, {name: "Liked Videos",path: ""}, {name: "History", path: ""}];
+    if (UserContext.state.status=='ADMIN') navItems.push({name: "Upload", path: "/upload"})
     return (
         <div className="flex mt-[20px]">
             <div className="text-red ml-[20px] text-[30px] text-red-500 w-fit">EduTube</div>
             <div className="flex ml-[60px] w-[40%] justify-around">
                     {navItems.map((item, id)=>{
                     return <div key={id} className="color-white text-[20px] cursor-pointer">
-                        <Link href={{pathname: '/'+item}}>{item} </Link>
+                        <Link href={{pathname: item.path}}>{item.name} </Link>
                     </div>
                      })}
             </div>
