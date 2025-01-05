@@ -57,11 +57,13 @@ const Profile = ()=>{
         }
     }
     useEffect(()=>{
+        console.log("Before firing")
+        console.log(userCxt.state.user)
         if(userCxt.state.user?.subscriptionstatus=="active"){
             //get subscription expiry date
             getsubdetails()
         }
-    },[])
+    },[userCxt.state.user])
     const renew = (
         <>
         <div className="text-red-500">Your subscription has expired, kindly renew</div>
