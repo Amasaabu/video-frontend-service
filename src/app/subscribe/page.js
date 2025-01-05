@@ -48,6 +48,12 @@ const Profile = ()=>{
     }
     const getsubdetails = ()=>{
         try {
+            const cookies = document.cookie.split(';')
+            let parts = []
+            cookies.forEach(cookie=>{
+              if(cookie.includes('token')){
+                parts = cookie.split('=')
+              }})
             const {data} = axios.get(BASE_USER_PROFILE_URL + "/api/profile/subscription", {headers: {token: parts[1]}})
             console.log(data);
             setSubscriptionDetails(data.ends_at)
