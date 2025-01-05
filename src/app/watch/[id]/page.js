@@ -30,7 +30,8 @@ const Watch=()=>{
                 <h1 className="text-xl font-bold">Your Video Title</h1>
             </div> */}
             <div className="h-[23vh] w-fit m-auto">
-                <h1 className="text-xl font-bold">{videoDetails.title}</h1>
+                <h1 className="text-xl w-fit m-auto font-bold">{videoDetails.title}</h1>
+                <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
             </div>
             <video poster={poster} controls className="w-full mt-[5vh] h-[500px]">
