@@ -56,6 +56,8 @@ const Profile = ()=>{
             setSubscriptionDetails("Subscription update failed, kindly try again")
         }
     }
+    console.log("From profile")
+    console.log(userCxt.state.user)
     useEffect(()=>{
         if(userCxt.state.user?.subscriptionstatus==="active"){
             //get subscription expiry date

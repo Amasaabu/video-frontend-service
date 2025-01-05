@@ -1,8 +1,9 @@
 export default function RootLayout({ children }) {
     return (
       <div>
-
-          {children}
+   <UserContextProvider>
+   {children}
+   </UserContextProvider>
       </div>
     );
   }

@@ -4,12 +4,21 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_CONTENT_URL, BASE_STREAM_URL, BASE_USER_PROFILE_URL } from "./values";
 import { UserContext } from "@/context/userContext";
+import  {useRouter} from "next/navigation"
 import { useContext } from "react";
 export default function Home() {
   const userCxt = useContext(UserContext);
   const [videos, setVideos]=useState([])
   const [likedVideos, setLikedVideos]=useState([])
-
+  // const router = useRouter()
+  // //guard to prevent unsubscribed users from accessing the page
+  // useEffect(()=>{
+  //   if(userCxt.state.user?.subscriptionstatus=="active"){
+  //     console.log("active subscription")
+  //   }else{
+  //     router.push("/subscribe")
+  //   }
+  // },[])
   useEffect(()=>{
     // userCxt.action.getUserFromToken()
     const fetchVideos = async()=>{
