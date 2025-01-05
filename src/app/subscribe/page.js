@@ -56,18 +56,16 @@ const Profile = ()=>{
             setSubscriptionDetails("Subscription update failed, kindly try again")
         }
     }
-    console.log("From profile")
-    console.log(userCxt.state.user)
     useEffect(()=>{
-        if(userCxt.state.user?.subscriptionstatus==="active"){
+        if(userCxt.state.user?.subscriptionstatus=="active"){
             //get subscription expiry date
             getsubdetails()
         }
     },[])
-    return (
-        <div className="w-[50%]">
-            {userCxt.state.user?.subscriptionstatus=="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: </h1>:<div className="text-red-500">Your subscription has expired, kindly renew</div>}
-            <div className="w-fit m-auto">Renew Subscription</div>
+    const renew = (
+        <>
+        <div className="text-red-500">Your subscription has expired, kindly renew</div>
+        <div className="w-fit m-auto">Renew Subscription</div>
             {Object.keys(form).map((item, id)=>{
                 return (
                     <div className="mt-[10px]" key={id}>
@@ -83,6 +81,12 @@ const Profile = ()=>{
                 })}
                 <button onClick={()=>subscribe()} className="mt-[40px] bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Renew Subscription</button>
                 {updateStatus?<div className="ml-[3px]">Mesage: {setUpdateStatus}</div>:''}
+        </>
+    )
+    return (
+        <div className="w-[50%] m-auto">
+            {userCxt.state.user?.subscriptionstatus=="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: {subscriptionDetails.ends_at}</h1>:renew}
+           
         </div>
     )
 }
