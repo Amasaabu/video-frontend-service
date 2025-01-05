@@ -46,7 +46,7 @@ const Profile = ()=>{
             setUpdateStatus("Subscription update failed, kindly try again")
           }
     }
-    const getsubdetails = ()=>{
+    const getsubdetails = async()=>{
         try {
             const cookies = document.cookie.split(';')
             let parts = []
@@ -54,7 +54,7 @@ const Profile = ()=>{
               if(cookie.includes('token')){
                 parts = cookie.split('=')
               }})
-            const {data} = axios.get(BASE_USER_PROFILE_URL + "/api/profile/subscription", {headers: {token: parts[1]}})
+            const {data} = await axios.get(BASE_USER_PROFILE_URL + "/api/profile/subscribe", {headers: {token: parts[1]}})
             console.log(data);
             setSubscriptionDetails(data.ends_at)
         } catch (error) {
