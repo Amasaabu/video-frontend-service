@@ -27,7 +27,7 @@ const Profile = ()=>{
     const subscribe=async()=>{
         const requestObject = { 
             amount: form.amount.value,
-            cardNumber: form.cardNumber.value,
+            cardnumber: form.cardNumber.value,
             currency: "GBP"
         }
         const cookies = document.cookie.split(';')
