@@ -14,7 +14,7 @@ export default function Home() {
   //guard to prevent unsubscribed users from accessing the page
   useEffect(() => {
     //dont perform the check until the user object is available
-    if (userCxt.state.user === undefined) return;
+    if (!userCxt.state.user) return;
     if (userCxt.state.user?.subscriptionstatus != "active") {
       router.push("/subscribe");
     }
