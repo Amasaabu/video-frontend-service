@@ -32,6 +32,7 @@ const Watch=()=>{
               if(cookie.includes('token')){
                 parts = cookie.split('=')
               }})
+              console.log(parts[1])
             const {data} = await axios.post(BASE_USER_PROFILE_URL + "/api/profile/like/"+id, {headers: {token: `${parts[1]}`}})
             console.log(data)
         } catch (error) {
