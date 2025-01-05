@@ -18,7 +18,7 @@ export default function Home() {
     }else{
       router.push("/subscribe")
     }
-  },[userCxt.state.user])
+  },[])
   useEffect(()=>{
     // userCxt.action.getUserFromToken()
     const fetchVideos = async()=>{

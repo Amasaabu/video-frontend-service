@@ -25,8 +25,9 @@ export default function RootLayout({ children }) {
       >
         <UserContextProvider>
           <Nav />
+          {children}
         </UserContextProvider>
-        {children}
+      
 
       </body>
     </html>
