@@ -7,6 +7,7 @@ import axios from "axios"
 const Profile = ()=>{
     const userCxt = useContext(UserContext)
     const [updateStatus, setUpdateStatus] = useState(false)
+    const [subscriptionDetails, setSubscriptionDetails] = useState({})  
     const [form, setForm] = useState({
        amount: {
             label: "Amount",
@@ -45,9 +46,20 @@ const Profile = ()=>{
             setUpdateStatus("Subscription update failed, kindly try again")
           }
     }
+    const getsubdetails = ()=>{
+        try {
+            const {data} = axios.get(BASE_USER_PROFILE_URL + "/api/profile/subscription", {headers: {token: parts[1]}})
+            console.log(data);
+            setSubscriptionDetails(data.ends_at)
+        } catch (error) {
+            console.log(error)
+            setSubscriptionDetails("Subscription update failed, kindly try again")
+        }
+    }
     useEffect(()=>{
         if(userCxt.state.user?.subscriptionstatus==="active"){
             //get subscription expiry date
+            getsubdetails()
         }
     },[])
     return (
