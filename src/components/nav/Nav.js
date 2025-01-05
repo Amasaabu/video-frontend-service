@@ -8,7 +8,7 @@ const Nav=()=>{
     console.log("Nav is rendering")
     console.log(userCxt.state.user)
     const navItems = [{name: "Home", path: ""}, {name: "Trending", path: ""}, {name: "Settings", path:""}, {name: "Liked Videos",path: ""}, {name: "History", path: ""}];
-    if (UserContext.state.user.status=='ADMIN') navItems.push({name: "Upload", path: "/upload"})
+    if (UserContext.state.user?.status=='ADMIN') navItems.push({name: "Upload", path: "/upload"})
     return (
         <div className="flex mt-[20px]">
             <div className="text-red ml-[20px] text-[30px] text-red-500 w-fit">EduTube</div>
