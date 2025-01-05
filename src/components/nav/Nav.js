@@ -7,7 +7,7 @@ const Nav=()=>{
     const userCxt = useContext(UserContext);
     console.log("Nav is rendering")
     console.log(userCxt.state.user)
-    const navItems = useState([{name: "Home", path: ""}, {name: "Trending", path: ""}, {name: "Settings", path:""}, {name: "Liked Videos",path: ""}, {name: "History", path: ""}]);
+    const navItems = [{name: "Home", path: ""}, {name: "Trending", path: ""}, {name: "Settings", path:""}, {name: "Liked Videos",path: ""}, {name: "History", path: ""}];
     if (userCxt.state.user?.status=="ADMIN") {console.log("adding...");navItems.push({name: "Upload", path: "/upload"})}
     console.log(navItems);
     return (
