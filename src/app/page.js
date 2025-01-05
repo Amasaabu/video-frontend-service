@@ -45,11 +45,20 @@ export default function Home() {
     getLikes()
     fetchVideos()
   },[])
+  //before passing the video object to the section component, append the  video list with like status
+  const videosWithLikeStatus = videos.map((item)=>{
+    const isLiked = likedVideos.find((video)=>video.id == item.id)
+    if(isLiked){
+      return {...item, isLiked: true}
+    }else{
+      return {...item, isLiked: false}
+    }
+  })
   return (
   <>
     <section className="p-[20px]">
       <h2 className="mb-[10px] text-lg">Recently Added</h2>
-      <Section1 videos={videos}/>
+      <Section1 videos={videosWithLikeStatus}/>
     </section>
 
     <section className="p-[20px]">
