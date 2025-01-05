@@ -31,8 +31,14 @@ const Watch=()=>{
             </div> */}
             <div className="h-[23vh] w-fit m-auto">
                 <h1 className="text-xl w-fit m-auto font-bold">{videoDetails.title}</h1>
+                <div className="text-[5px]">
+                    <span className="text-sm">Genre: </span>
+                    <span className="text-sm">{videoDetails.genre}</span>
+                </div>
                 <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
+                <button className="bg-red-500 p-2 rounded-lg w-[50%] mt-[10px]">Like</button>
+                <button className="bg-red-500 ml-[10px] p-2 rounded-lg w-[50%] mt-[10px]">Add to watch list</button>
             </div>
             <video poster={poster} controls className="w-full mt-[5vh] h-[500px]">
                 <source src={`${BASE_STREAM_URL}/video/stream/${id}`} type="video/mp4"/>
