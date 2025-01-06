@@ -106,7 +106,7 @@ const onThumbNailUpload = async (e) => {
         await axios.post(`/api/content/add`, {
             title: form.title.value,
             releasedAt: form.releasedAt.value,
-            genre: form.genre.value,
+            genres: form.genre.value,
             thumbNailLocation: thumbNailLocation,
             location: videoLocation,
             originalFileName: uploadedFileName,
