@@ -65,7 +65,7 @@ const Watch=()=>{
                 <h1 className="text-xl w-fit m-auto font-bold">{videoDetails.title}</h1>
                 <div className="text-[5px]">
                     <span className="text-sm">Genre: </span>
-                    <span className="text-sm">{videoDetails.genre}</span>
+                    <span className="text-sm">{videoDetails.genres}</span>
                 </div>
                 <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
