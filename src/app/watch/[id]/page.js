@@ -82,7 +82,7 @@ const Watch=()=>{
                 parts = cookie.split('=')
               }})
              const {data} = await axios.delete(BASE_USER_PROFILE_URL + "/api/profile/watchlist/"+id, {headers: {token: `${parts[1]}`}})
-              setLikeState("false")
+              setWatchListState("false")
             console.log(data)
         } catch (error) {
             console.log(error)
