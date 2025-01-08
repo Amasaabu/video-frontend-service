@@ -10,6 +10,7 @@ export default function Home() {
   const userCxt = useContext(UserContext);
   const [videos, setVideos]=useState([])
   const [likedVideos, setLikedVideos]=useState([])
+  const [watchListVideos, setWatchListVideos]=useState([])
   const router = useRouter()
   //guard to prevent unsubscribed users from accessing the page
   useEffect(() => {
@@ -33,15 +34,27 @@ export default function Home() {
         if(cookie.includes('token')){
           parts = cookie.split('=')
         }})
+      const {data} = await axios.get(BASE_USER_PROFILE_URL + "/api/profile/likes", {headers: {token: `${parts[1]}`}}) 
+      setLikedVideos(data.message)
+    }
+
+    const getWatchlist = async()=>{
+      const cookies = document.cookie.split(';')
+      let parts = []
+      cookies.forEach(cookie=>{
+        if(cookie.includes('token')){
+          parts = cookie.split('=')
+        }})
       
       console.log('Before axios');
       console.log(parts[1])
 
-      const {data} = await axios.get(BASE_USER_PROFILE_URL + "/api/profile/likes", {headers: {token: `${parts[1]}`}}) 
-      console.log("liked videos")
+      const {data} = await axios.get(BASE_USER_PROFILE_URL + "/api/profile/watchlist", {headers: {token: `${parts[1]}`}}) 
+      console.log("watchlist videos")
       console.log(data)
-      setLikedVideos(data.message)
+      setWatchListVideos(data.message)
     }
+    getWatchlist()
     getLikes()
     fetchVideos()
   },[])
@@ -52,6 +65,15 @@ export default function Home() {
       return {...item, isLiked: true}
     }else{
       return {...item, isLiked: false}
+    }
+  })
+  //before passing the video object to the section component, append the  video list with watchlist status
+  const videosWithWatchListStatus = videos.map((item)=>{
+    const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
+    if(isWatchListed){
+      return {...item, isWatchListed: true}
+    }else{
+      return {...item, isWatchListed: false}
     }
   })
   return (
@@ -68,7 +90,7 @@ export default function Home() {
 
     <section className="p-[20px]">
       <h2 className="mb-[10px] text-lg">Watch List</h2>
-      <Section1 videos={videos}/>
+      <Section1 videos={videosWithWatchListStatus}/>
     </section>
   
   </>

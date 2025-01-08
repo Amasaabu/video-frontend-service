@@ -9,7 +9,9 @@ const Watch=()=>{
     const search = useSearchParams();
     const poster = search.get('poster');    
     const isLiked = search.get('like');
+    const isWatchList = search.get('watchlist');
     const [likeState, setLikeState] = useState(isLiked)
+    const [watchListState, setWatchListState] = useState(isWatchList)
 
     const paths = path.split('/')
     const id = paths[paths.length - 1];
@@ -41,6 +43,21 @@ const Watch=()=>{
             console.log(error)
         }
     }
+    const addToWatchList = async()=>{
+        try {
+            const cookies = document.cookie.split(';')
+            let parts = []
+            cookies.forEach(cookie=>{
+              if(cookie.includes('token')){
+                parts = cookie.split('=')
+              }})
+             const {data} = await axios.post(BASE_USER_PROFILE_URL + "/api/profile/watchlist/"+id,{}, {headers: {token: `${parts[1]}`}})
+            setLikeState("true")
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const removeFromLikes = async()=>{
         try {
             const cookies = document.cookie.split(';')
@@ -50,6 +67,21 @@ const Watch=()=>{
                 parts = cookie.split('=')
               }})
              const {data} = await axios.delete(BASE_USER_PROFILE_URL + "/api/profile/like/"+id, {headers: {token: `${parts[1]}`}})
+              setLikeState("false")
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const removeFromWatchList = async()=>{
+        try {
+            const cookies = document.cookie.split(';')
+            let parts = []
+            cookies.forEach(cookie=>{
+              if(cookie.includes('token')){
+                parts = cookie.split('=')
+              }})
+             const {data} = await axios.delete(BASE_USER_PROFILE_URL + "/api/profile/watchlist/"+id, {headers: {token: `${parts[1]}`}})
               setLikeState("false")
             console.log(data)
         } catch (error) {
@@ -70,7 +102,7 @@ const Watch=()=>{
                 <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
                 <button onClick={likeState=="true"?removeFromLikes:addToLikes} className="bg-red-500 p-2 rounded-lg w-fit mt-[10px]">{likeState=="true"?"Unlike":"Like"}</button>
-                <button className="bg-red-500 ml-[10px] p-2 rounded-lg w-fit mt-[10px]">Add to watch list</button>
+                <button onClick={watchListState=="true"?removeFromWatchList:addToWatchList} className="bg-red-500 ml-[10px] p-2 rounded-lg w-fit mt-[10px]">{watchListState=="true"?"REmove From Watchlist":"Add to watch list"}</button>
             </div>
             <video poster={poster} controls className="w-full mt-[5vh] h-[500px]">
                 <source src={`${BASE_STREAM_URL}/video/stream/${id}`} type="video/mp4"/>
