@@ -45,8 +45,13 @@ const UserContextProvider = ({children})=>{
         }
 
     }
+    const logout=()=>{
+        document.cookie = 'token=; Max-Age=0; path=/;'
+        dispatch({type: "LOGOUT"})
+        router.push("/signin")
+    }
     return (
-    <UserContext.Provider value={{state, action: {login, getUserFromToken}}}>
+    <UserContext.Provider value={{state, action: {login, getUserFromToken, logout}}}>
         {children}
     </UserContext.Provider>
     )

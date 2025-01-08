@@ -7,7 +7,8 @@ const Nav=()=>{
     const userCxt = useContext(UserContext);
     console.log("Nav is rendering")
     console.log(userCxt.state.user)
-    const navItems = [{name: "Home", path: "/"}, {name: "Trending", path: ""}, {name: "Settings", path:"/settings"}];
+    const navItems = [{name: "Home", path: "/"}, {name: "Trending", path: ""}, {name: "Subscription", path:"/subscribe"}];
+    if (userCxt.state.user) {navItems.push({name: "Logout", path: "/logout"})}
     if (userCxt.state.user?.status=="ADMIN") {console.log("adding...");navItems.push({name: "Upload", path: "/upload"})}
     console.log(navItems);
     return (
@@ -22,6 +23,7 @@ const Nav=()=>{
             </div>
             <div className="w-fit  mr-[8%] ml-auto">
                 <ProfileIcon user={userCxt.state } />
+               {userCxt.state.user&& <button onClick={userCxt.action.logout} className="bg-red-500 p-2 rounded-lg w-[50%] ml-[10px]">Sign-Out</button>}
             </div>
         </div>
     )
