@@ -76,11 +76,19 @@ export default function Home() {
       return {...item, isWatchListed: false}
     }
   })
+  const videosWithLikeAndWatchListStatus = videosWithLikeStatus.map((item)=>{
+    const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
+    if(isWatchListed){
+      return {...item, isWatchListed: true}
+    }else{
+      return {...item, isWatchListed: false}
+    }
+  })
   return (
   <>
     <section className="p-[20px]">
       <h2 className="mb-[10px] text-lg">Recently Added</h2>
-      <Section1 videos={videosWithLikeStatus}/>
+      <Section1 videos={videosWithLikeAndWatchListStatus}/>
     </section>
 
     <section className="p-[20px]">
@@ -90,7 +98,7 @@ export default function Home() {
 
     <section className="p-[20px]">
       <h2 className="mb-[10px] text-lg">Watch List</h2>
-      <Section1 videos={videosWithWatchListStatus}/>
+      <Section1 videos={watchListVideos}/>
     </section>
   
   </>
