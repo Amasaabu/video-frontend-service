@@ -23,7 +23,7 @@ const Nav=()=>{
             </div>
             <div className="w-fit  mr-[8%] ml-auto">
                 <ProfileIcon user={userCxt.state } />
-               {userCxt.state.user&& <button onClick={userCxt.action.logout} className="bg-red-500 p-2 rounded-lg w-[50%] ml-[10px]">Sign-Out</button>}
+               {userCxt.state.user&& <button onClick={userCxt.action.logout} className="bg-red-500 p-2 rounded-lg w-fit ml-[10px]">Sign-Out</button>}
             </div>
         </div>
     )
