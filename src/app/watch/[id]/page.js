@@ -52,7 +52,7 @@ const Watch=()=>{
                 parts = cookie.split('=')
               }})
              const {data} = await axios.post(BASE_USER_PROFILE_URL + "/api/profile/watchlist/"+id,{}, {headers: {token: `${parts[1]}`}})
-            setLikeState("true")
+             setWatchListState("true")
             console.log(data)
         } catch (error) {
             console.log(error)
@@ -102,7 +102,7 @@ const Watch=()=>{
                 <div className="text-sm w-fit m-auto">{videoDetails.releasedAt}</div>
                 <div className="flex items-center space-x-2">{videoDetails.description}</div>
                 <button onClick={likeState=="true"?removeFromLikes:addToLikes} className="bg-red-500 p-2 rounded-lg w-fit mt-[10px]">{likeState=="true"?"Unlike":"Like"}</button>
-                <button onClick={watchListState=="true"?removeFromWatchList:addToWatchList} className="bg-red-500 ml-[10px] p-2 rounded-lg w-fit mt-[10px]">{watchListState=="true"?"REmove From Watchlist":"Add to watch list"}</button>
+                <button onClick={watchListState=="true"?removeFromWatchList:addToWatchList} className="bg-red-500 ml-[10px] p-2 rounded-lg w-fit mt-[10px]">{watchListState=="true"?"Remove From Watchlist":"Add to watch list"}</button>
             </div>
             <video poster={poster} controls className="w-full mt-[5vh] h-[500px]">
                 <source src={`${BASE_STREAM_URL}/video/stream/${id}`} type="video/mp4"/>

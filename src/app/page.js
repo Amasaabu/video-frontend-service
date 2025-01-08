@@ -67,15 +67,6 @@ export default function Home() {
       return {...item, isLiked: false}
     }
   })
-  //before passing the video object to the section component, append the  video list with watchlist status
-  const videosWithWatchListStatus = videos.map((item)=>{
-    const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
-    if(isWatchListed){
-      return {...item, isWatchListed: true}
-    }else{
-      return {...item, isWatchListed: false}
-    }
-  })
   const videosWithLikeAndWatchListStatus = videosWithLikeStatus.map((item)=>{
     const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
     if(isWatchListed){
