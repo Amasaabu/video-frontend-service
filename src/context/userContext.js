@@ -28,7 +28,8 @@ const UserContextProvider = ({children})=>{
     const login = async(email, password)=>{
         console.log("login")
         await axios.post(BASE_AUTH_URL+"/api/user/auth", {email, password}, {withCredentials:true})
-        router.push("/")
+        // router.push("/")
+        location.href = "/"
     }
     useEffect(()=>{
         getUserFromToken()
