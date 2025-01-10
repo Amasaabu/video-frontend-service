@@ -58,10 +58,12 @@ export default function Home() {
     getLikes()
     fetchVideos()
   },[])
-  //before passing the video object to the section component, append the  video list with like status
+  const likedVideosWithStatus=[]
+  const watchListVideosWithStatus=[]
   const videosWithLikeStatus = videos.map((item)=>{
     const isLiked = likedVideos.find((video)=>video.id == item.id)
     if(isLiked){
+      likedVideosWithStatus.push( {...item, isLiked: true})
       return {...item, isLiked: true}
     }else{
       return {...item, isLiked: false}
@@ -70,6 +72,7 @@ export default function Home() {
   const videosWithLikeAndWatchListStatus = videosWithLikeStatus.map((item)=>{
     const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
     if(isWatchListed){
+      watchListVideosWithStatus.push( {...item, isWatchListed: true})
       return {...item, isWatchListed: true}
     }else{
       return {...item, isWatchListed: false}
