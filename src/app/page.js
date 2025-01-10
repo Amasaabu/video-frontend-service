@@ -58,8 +58,6 @@ export default function Home() {
     getLikes()
     fetchVideos()
   },[])
-  const likedVideosWithStatus=[]
-  const watchListVideosWithStatus=[]
   const videosWithLikeStatus = videos.map((item)=>{
     const isLiked = likedVideos.find((video)=>video.id == item.id)
     if(isLiked){
@@ -68,20 +66,18 @@ export default function Home() {
       return {...item, isLiked: false}
     }
   })
-  const videosWithLikeAndWatchListStatus = videosWithLikeStatus.map((item)=>{
+  const videosWithLikeAndWatchListStatus = videosWithLikeStatus.map((item, iterator)=>{
     const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
-    if (item.isLiked) {
-      watchListVideosWithStatus.push({...item, isLiked: true})
-      likedVideosWithStatus.push({...item, isLiked: true})
-    }
     if(isWatchListed){
-      likedVideosWithStatus.push({...item, isWatchListed: true})
-      watchListVideosWithStatus.push( {...item, isWatchListed: true})
       return {...item, isWatchListed: true}
     }else{
       return {...item, isWatchListed: false}
     }
   })
+  //filter only liked videos from videoswithlikeandwatchliststatus
+  const likedVideosWithStatus = videosWithLikeAndWatchListStatus.filter((video)=>video.isLiked)
+  //filter only watchlisted videos from videoswithlikeandwatchliststatus
+  const watchListVideosWithStatus = videosWithLikeAndWatchListStatus.filter((video)=>video.isWatchListed)
   return (
   <>
     <section className="p-[20px]">
