@@ -63,7 +63,6 @@ export default function Home() {
   const videosWithLikeStatus = videos.map((item)=>{
     const isLiked = likedVideos.find((video)=>video.id == item.id)
     if(isLiked){
-      likedVideosWithStatus.push( {...item, isLiked: true})
       return {...item, isLiked: true}
     }else{
       return {...item, isLiked: false}
@@ -71,7 +70,12 @@ export default function Home() {
   })
   const videosWithLikeAndWatchListStatus = videosWithLikeStatus.map((item)=>{
     const isWatchListed = watchListVideos.find((video)=>video.id == item.id)
+    if (item.isLiked) {
+      watchListVideosWithStatus.push({...item, isLiked: true})
+      likedVideosWithStatus.push({...item, isLiked: true})
+    }
     if(isWatchListed){
+      likedVideosWithStatus.push({...item, isWatchListed: true})
       watchListVideosWithStatus.push( {...item, isWatchListed: true})
       return {...item, isWatchListed: true}
     }else{
@@ -87,12 +91,12 @@ export default function Home() {
 
     <section className="p-[20px]">
       <h2 className="mb-[10px] text-lg">Likes</h2>
-      <Section1 videos={likedVideos}/>
+      <Section1 videos={likedVideosWithStatus}/>
     </section>
 
     <section className="p-[20px]">
       <h2 className="mb-[10px] text-lg">Watch List</h2>
-      <Section1 videos={watchListVideos}/>
+      <Section1 videos={watchListVideosWithStatus}/>
     </section>
   
   </>
