@@ -4,9 +4,28 @@ import  {useRouter} from "next/navigation"
 import { UserContext } from "@/context/userContext"  
 import { BASE_USER_PROFILE_URL } from "../values"
 import axios from "axios"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+const plans = [
+    {
+      name: 'Basic',
+      price: 8.99,
+      features: ['Watch on 1 screen at a time', 'Watch in HD', 'Unlimited movies and TV shows', 'Cancel anytime'],
+    },
+    {
+      name: 'Standard',
+      price: 13.99,
+      features: ['Watch on 2 screens at a time', 'Full HD available', 'Unlimited movies and TV shows', 'Cancel anytime'],
+    },
+    {
+      name: 'Premium',
+      price: 17.99,
+      features: ['Watch on 4 screens at a time', 'Ultra HD and HDR available', 'Unlimited movies and TV shows', 'Cancel anytime'],
+    },
+  ]
 const Profile = ()=>{
     const userCxt = useContext(UserContext)
     const [updateStatus, setUpdateStatus] = useState(false)
+    const [selectedPlan, setSelectedPlan] = useState('Standard')
     const [subscriptionDetails, setSubscriptionDetails] = useState({ends_at: "NULL"})  
     const [form, setForm] = useState({
        amount: {
@@ -90,9 +109,54 @@ const Profile = ()=>{
                 {updateStatus?<div className="ml-[3px]">Mesage: {setUpdateStatus}</div>:''}
         </>
     )
+    const monthSubscriptionCard = (
+        <div className="w-fit p-2 ">
+            <div>Subscribe for One Month</div>
+            <div>£10</div><div className="min-h-screen bg-black text-white p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-8">Choose your plan</h1>
+        <form onSubmit={handleSubmit}>
+          <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} className="grid gap-8 md:grid-cols-3">
+            {plans.map((plan) => (
+              <div 
+                key={plan.name} 
+                className={`relative rounded-lg p-6 border-2 transition-all duration-300 ${
+                  selectedPlan === plan.name 
+                    ? 'border-red-600 bg-red-900 bg-opacity-20' 
+                    : 'border-gray-700 hover:border-gray-500'
+                }`}
+              >
+                <RadioGroupItem
+                  value={plan.name}
+                  id={plan.name}
+                  className="absolute right-4 top-4 border-red-600 text-red-600"
+                />
+                <Label htmlFor={plan.name} className="space-y-2 cursor-pointer">
+                  <h2 className="text-xl font-semibold">{plan.name}</h2>
+                  <p className="text-2xl font-bold">${plan.price}/month</p>
+                  <ul className="space-y-2 mt-4">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="flex items-center text-sm">
+                        <Check className="mr-2 h-4 w-4 text-red-600" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+          <Button type="submit" className="w-full mt-8 bg-red-600 hover:bg-red-700 text-white">
+            Subscribe to {selectedPlan}
+          </Button>
+        </form>
+      </div>
+    </div>
+        </div>
+    )
     return (
         <div className="w-[50%] m-auto">
-            {userCxt.state.user?.subscriptionstatus=="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: {subscriptionDetails.ends_at}</h1>:renew}
+            {userCxt.state.user?.subscriptionstatus=="active"?<h1 className="w-fit m-auto">Your current subscription Status will expire on: {subscriptionDetails.ends_at}</h1>:monthSubscriptionCard}
            
         </div>
     )

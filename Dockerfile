@@ -11,6 +11,7 @@ RUN npm run build
 # now create a new image
 FROM node:22.0.0-alpine
 WORKDIR /app
+# only copy the public folder and the .next folder
 COPY --from=base /app/public /app/public
 COPY --from=base /app/.next/standalone /app
 COPY --from=base /app/.next/static /app/.next/static
