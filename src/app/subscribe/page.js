@@ -4,7 +4,6 @@ import  {useRouter} from "next/navigation"
 import { UserContext } from "@/context/userContext"  
 import { BASE_USER_PROFILE_URL } from "../values"
 import axios from "axios"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 const plans = [
     {
       name: 'Basic',
@@ -44,9 +43,17 @@ const Profile = ()=>{
         }
 }) 
     const router = useRouter();
-    const subscribe=async()=>{
+    const subscribe=async(e)=>{
+        e.preventDefault()
+        console.log(selectedPlan)
+        let amount = 0
+        Object.keys(plans).map((item, id)=>{
+            if(plans[item].name == selectedPlan){
+                amount = plans[item].price
+            }
+        })
         const requestObject = { 
-            amount: form.amount.value,
+            amount: amount,
             cardnumber: form.cardNumber.value,
             currency: "GBP"
         }
@@ -110,49 +117,55 @@ const Profile = ()=>{
         </>
     )
     const monthSubscriptionCard = (
-        <div className="w-fit p-2 ">
-            <div>Subscribe for One Month</div>
-            <div>£10</div><div className="min-h-screen bg-black text-white p-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8">Choose your plan</h1>
-        <form onSubmit={handleSubmit}>
-          <RadioGroup value={selectedPlan} onValueChange={setSelectedPlan} className="grid gap-8 md:grid-cols-3">
-            {plans.map((plan) => (
-              <div 
-                key={plan.name} 
-                className={`relative rounded-lg p-6 border-2 transition-all duration-300 ${
-                  selectedPlan === plan.name 
-                    ? 'border-red-600 bg-red-900 bg-opacity-20' 
-                    : 'border-gray-700 hover:border-gray-500'
-                }`}
-              >
-                <RadioGroupItem
-                  value={plan.name}
-                  id={plan.name}
-                  className="absolute right-4 top-4 border-red-600 text-red-600"
-                />
-                <Label htmlFor={plan.name} className="space-y-2 cursor-pointer">
-                  <h2 className="text-xl font-semibold">{plan.name}</h2>
-                  <p className="text-2xl font-bold">${plan.price}/month</p>
-                  <ul className="space-y-2 mt-4">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-sm">
-                        <Check className="mr-2 h-4 w-4 text-red-600" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-          <Button type="submit" className="w-full mt-8 bg-red-600 hover:bg-red-700 text-white">
-            Subscribe to {selectedPlan}
-          </Button>
-        </form>
-      </div>
-    </div>
+        <div className="min-h-screen bg-black text-white p-6">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold text-center mb-8">Choose your plan</h1>
+          <form onSubmit={subscribe}>
+            <div className="grid gap-8 md:grid-cols-3">
+              {plans.map((plan) => (
+                <div 
+                  key={plan.name} 
+                  className={`relative rounded-lg p-6 border-2 transition-all duration-300 ${
+                    selectedPlan === plan.name 
+                      ? 'border-red-600 bg-red-900 bg-opacity-20' 
+                      : 'border-gray-700 hover:border-gray-500'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="plan"
+                    id={plan.name}
+                    value={plan.name}
+                    checked={selectedPlan === plan.name}
+                    onChange={() => setSelectedPlan(plan.name)}
+                    className="absolute right-4 top-4 w-4 h-4 text-red-600 border-red-600 focus:ring-red-600"
+                  />
+                  <label htmlFor={plan.name} className="block space-y-2 cursor-pointer">
+                    <h2 className="text-xl font-semibold">{plan.name}</h2>
+                    <p className="text-2xl font-bold">${plan.price}/month</p>
+                    <ul className="space-y-2 mt-4">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-center text-sm">
+                          <svg className="w-4 h-4 mr-2 text-red-600" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M5 13l4 4L19 7"></path>
+                          </svg>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </label>
+                </div>
+              ))}
+            </div>
+            <button 
+              type="submit" 
+              className="w-full mt-8 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-md font-semibold transition-colors duration-300"
+            >
+              Subscribe to {selectedPlan}
+            </button>
+          </form>
         </div>
+      </div>
     )
     return (
         <div className="w-[50%] m-auto">
