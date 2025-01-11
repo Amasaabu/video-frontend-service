@@ -8,7 +8,7 @@ const Nav=()=>{
     console.log("Nav is rendering")
     console.log(userCxt.state.user)
     let navItems = [{name: "Home", path: "/"}]
-    if (userCxt.state.user) {navItems.push({name: "Logout", path: "/logout"},{name: "Trending", path: ""}, {name: "Subscription", path:"/subscribe"})}
+    if (userCxt.state.user) {navItems.push( {name: "Subscription", path:"/subscribe"})}
     if (userCxt.state.user?.status=="ADMIN") {console.log("adding...");navItems.push({name: "Upload", path: "/upload"})}
     console.log(navItems);
     return (
