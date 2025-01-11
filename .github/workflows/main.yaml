@@ -10,7 +10,7 @@ permissions:
   id-token: write # This is required for requesting the JWT
   contents: read
 jobs:
-  RUN TEST:
+  RUN_UNIT_TEST:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -27,6 +27,7 @@ jobs:
       - name: Run Tests
         run: npm run test
   BUILD_AND_PUBLISH_TO_DOCKERHUB:
+    needs: RUN_UNIT_TEST
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
