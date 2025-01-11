@@ -10,6 +10,22 @@ permissions:
   id-token: write # This is required for requesting the JWT
   contents: read
 jobs:
+  RUN TEST:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test
   BUILD_AND_PUBLISH_TO_DOCKERHUB:
     runs-on: ubuntu-latest
     steps:
