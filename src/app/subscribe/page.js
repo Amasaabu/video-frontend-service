@@ -38,7 +38,7 @@ const Profile = ()=>{
             label: "Card Number",
             placeholder: "Card Number",
             type: "text",
-            value: ""
+            value: 678721212126988
 
         }
 }) 
